@@ -1,6 +1,6 @@
 package com.demo.poc.entrypoint.report.helper;
 
-import com.demo.poc.commons.custom.exceptions.DocxReadException;
+import com.demo.poc.entrypoint.report.exceptions.DocxReadException;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;

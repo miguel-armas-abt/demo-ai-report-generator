@@ -1,7 +1,7 @@
 package com.demo.poc.entrypoint.report.service;
 
 import com.demo.poc.commons.core.serialization.JsonSerializer;
-import com.demo.poc.commons.custom.properties.ApplicationProperties;
+import com.demo.poc.commons.properties.ApplicationProperties;
 import com.demo.poc.entrypoint.report.dto.aggregate.ReportDto;
 import com.demo.poc.entrypoint.report.dto.prompt.Prompt;
 import com.demo.poc.entrypoint.report.dto.request.ReportRequestDto;

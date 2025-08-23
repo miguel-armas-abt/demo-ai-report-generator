@@ -5,7 +5,7 @@ import java.util.Map;
 import com.demo.poc.commons.core.properties.restclient.RestClient;
 import com.demo.poc.commons.core.restclient.WebClientFactory;
 import com.demo.poc.commons.core.restclient.error.RestClientErrorHandler;
-import com.demo.poc.commons.custom.properties.ApplicationProperties;
+import com.demo.poc.commons.properties.ApplicationProperties;
 import com.demo.poc.entrypoint.report.repository.openai.config.OpenAIProperties;
 import com.demo.poc.entrypoint.report.repository.openai.error.OpenAIError;
 import com.demo.poc.entrypoint.report.repository.openai.mapper.OpenAIRequestMapper;
