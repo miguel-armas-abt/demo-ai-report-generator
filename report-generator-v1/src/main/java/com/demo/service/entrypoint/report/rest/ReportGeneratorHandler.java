@@ -1,6 +1,5 @@
 package com.demo.service.entrypoint.report.rest;
 
-import com.demo.commons.restserver.utils.RestServerUtils;
 import com.demo.commons.validations.BodyValidator;
 import com.demo.commons.validations.headers.DefaultHeaders;
 import com.demo.commons.validations.ParamValidator;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
-import reactor.util.function.Tuple2;
 
 @Component
 @RequiredArgsConstructor
@@ -30,13 +28,15 @@ public class ReportGeneratorHandler {
   private final ReportGeneratorService reportGeneratorService;
 
   public Mono<ServerResponse> generateReport(ServerRequest serverRequest) {
-    Map<String, String> headers = RestServerUtils.extractHeadersAsMap(serverRequest);
-
-    return paramValidator.validateAndGet(headers, DefaultHeaders.class)
+    return paramValidator.validateHeadersAndGet(serverRequest, DefaultHeaders.class)
         .zipWith(serverRequest.bodyToMono(ReportRequestDto.class))
-        .map(Tuple2::getT2)
-        .flatMap(bodyValidator::validateAndGet)
-        .flatMap(body -> reportGeneratorService.generateReport(headers, body))
+        .flatMap(tuple -> {
+          Map<String, String> headers = tuple.getT1().getValue();
+          ReportRequestDto requestBody = tuple.getT2();
+
+          return bodyValidator.validateAndGet(requestBody)
+              .flatMap(body -> reportGeneratorService.generateReport(headers, body));
+        })
         .flatMap(bytes -> {
           DataBuffer buffer = new DefaultDataBufferFactory().wrap(bytes);
           return ServerResponse.ok()
